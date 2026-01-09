@@ -1,0 +1,13 @@
+import pandas as pd
+from sklearn.impute import SimpleImputer
+data={
+    'Age':[25,30,None,22,None,28],
+    'Salary':[50000,None,60000,52000,50000,None]
+}
+df=pd.DataFrame(data)
+print("Original Data:")
+imputer = SimpleImputer(strategy='mean')
+imputed_data = imputer.fit_transform(df)
+df_imputed = pd.DataFrame(imputed_data, columns=df.columns)
+print("\n Data After Mean Imputation:")
+print(df_imputed)
