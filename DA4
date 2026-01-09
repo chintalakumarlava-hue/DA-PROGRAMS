@@ -1,0 +1,28 @@
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+from sklearn.linear_model import LogisticRegression # Corrected: LogisticRegression
+data = {
+    'Age':[25,30,22,40,35],
+    'Salary':[50000,54000,58000,61000,59000],
+}
+df = pd.DataFrame(data)
+print("Original Data:\n",df)
+df['HighSalary'] = (df['Salary']>=58000).astype(int) # Corrected: .astype(int)
+X = df[['Age']]
+Y = df['HighSalary']
+log_model = LogisticRegression()
+log_model.fit(X,Y) # Corrected: log_model.fit(X,Y)
+print("\nmodel Coefficient:",log_model.coef_[0][0])
+print("model Intercept:",log_model.intercept_[0]) # Corrected: log_model.intercept_[0]
+age_range = np.linspace(df['Age'].min(),df['Age'].max(),200)
+age_df = pd.DataFrame(age_range,columns = ['Age'])
+Probabilities = log_model.predict_proba(age_df)[:,1]
+plt.scatter(df['Age'],df['HighSalary'],color = 'blue',label = "Actual Classes") # Corrected: plt.scatter
+plt.plot(age_range,Probabilities,color = 'red',label = "Logistic Curve")
+plt.xlabel("Age") # Corrected: plt.xlabel
+plt.ylabel("Probability of High Salary") # Corrected: plt.ylabel
+plt.title("Logistic Regression:Age vs High Salary probability")
+plt.grid(True)
+plt.legend()
+plt.show()
